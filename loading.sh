@@ -1,0 +1,52 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+RED='\e[1;31m'
+DARK='\e[0;31m'
+WHITE='\e[1;37m'
+GREEN='\e[1;32m'
+RESET='\e[0m'
+
+clear
+echo -e "${RED}"
+echo " ███╗   ██╗ █████╗ ███╗   ███╗ ██████╗ ███████╗██╗  ██╗"
+echo " ████╗  ██║██╔══██╗████╗ ████║██╔═══██╗██╔════╝██║ ██╔╝"
+echo " ██╔██╗ ██║███████║██╔████╔██║██║   ██║███████╗█████╔╝ "
+echo " ██║╚██╗██║██╔══██║██║╚██╔╝██║██║   ██║╚════██║██╔═██╗ "
+echo " ██║ ╚████║██║  ██║██║ ╚═╝ ██║╚██████╔╝███████║██║  ██╗"
+echo " ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝"
+echo -e "${RESET}"
+
+sleep 0.5
+
+echo ""
+echo -e "${WHITE}Initializing Boot Script...${RESET}"
+sleep 0.4
+
+steps=(
+"Loading Kernel..."
+"Checking System..."
+"Loading Modules..."
+"Starting Services..."
+"Loading Theme..."
+"Preparing Shell..."
+"Finalizing..."
+)
+
+for step in "${steps[@]}"
+do
+    printf "${RED}%-28s${RESET}" "$step"
+
+    for i in {1..25}
+    do
+        printf "█"
+        sleep 0.015
+    done
+
+    echo -e " ${GREEN}[OK]${RESET}"
+done
+
+echo ""
+echo -e "${GREEN}Boot Completed Successfully.${RESET}"
+sleep 1
+
+clear
