@@ -23,9 +23,9 @@ pkg update -y
 
 pkg install git -y
 
-git clone https://github.com/ERFAN-NAJI5140/NAMOSKHAR
+git clone https://github.com/ERFAN-NAJI5140/NAMOSKHAR-
 
-cd NAMOSKHAR
+cd NAMOSKHAR-
 
 chmod +x install.sh
 
