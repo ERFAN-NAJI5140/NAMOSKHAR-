@@ -1,3 +1,4 @@
+~/.config/namoskhar/loading.sh
 #!/data/data/com.termux/files/usr/bin/bash
 
 RED="\e[1;31m"
