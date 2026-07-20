@@ -1,42 +1,83 @@
-~/.config/namoskhar/loading.sh
 #!/data/data/com.termux/files/usr/bin/bash
 
-RED="\e[1;31m"
-DARK="\e[0;31m"
-WHITE="\e[1;37m"
-RESET="\e[0m"
+RED='\e[1;31m'
+DARKRED='\e[0;31m'
+WHITE='\e[1;37m'
+RESET='\e[0m'
 
 clear
 
-# اطلاعات سیستم
-TIME=$(date +"%H:%M:%S")
-DATE=$(date +"%Y-%m-%d")
-BATTERY=$(termux-battery-status 2>/dev/null | grep percentage | cut -d':' -f2 | tr -d ' ,"')
-ANDROID=$(getprop ro.build.version.release)
-IP=$(ip route get 1.1.1.1 2>/dev/null | awk '{print $7;exit}')
+# اجرای لودینگ
+if [ -f ~/.config/namoskhar/loading.sh ]; then
+bash ~/.config/namoskhar/loading.sh
+fi
 
-echo -e "${RED}"
-echo "╔══════════════════════════════════════════════════════════════════════╗"
-echo "║                                                                  ║"
-echo "║ ███╗   ██╗ █████╗ ███╗   ███╗ ██████╗ ███████╗██╗  ██╗ █████╗ ██████╗║"
-echo "║ ████╗  ██║██╔══██╗████╗ ████║██╔═══██╗██╔════╝██║ ██╔╝██╔══██╗██╔══██╗║"
-echo "║ ██╔██╗ ██║███████║██╔████╔██║██║   ██║███████╗█████╔╝ ███████║██████╔╝║"
-echo "║ ██║╚██╗██║██╔══██║██║╚██╔╝██║██║   ██║╚════██║██╔═██╗ ██╔══██║██╔══██╗║"
-echo "║ ██║ ╚████║██║  ██║██║ ╚═╝ ██║╚██████╔╝███████║██║  ██╗██║  ██║██║  ██║║"
-echo "║ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝║"
-echo "║                                                                  ║"
-echo "║                     Boot Script v1.0                             ║"
-echo "╚══════════════════════════════════════════════════════════════════════╝"
-echo -e "${RESET}"
+# =========================
+# System Information
+# =========================
+
+TIME=$(date +"%H:%M:%S")
+DATE=$(date +"%d-%m-%Y")
+
+ANDROID=$(getprop ro.build.version.release)
+
+USER_NAME=$(whoami)
+
+IP=$(ip route get 1.1.1.1 2>/dev/null | awk '{print $7; exit}')
+
+if [ -z "$IP" ]; then
+IP="Offline"
+fi
+
+BATTERY=$(termux-battery-status 2>/dev/null | grep percentage | awk '{print $2}' | tr -d ',')
+[ -z "$BATTERY" ] && BATTERY="N/A"
+
+STORAGE=$(df -h /data | awk 'NR==2 {print $4}')
+
+RAM=$(free -h | awk '/Mem:/ {print $7}')
+
+# =========================
+# Logo
+# =========================
+
+echo -e "$RED"
+
+cat << "EOF"
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║ ███╗   ██╗ █████╗ ███╗   ███╗ ██████╗ ███████╗██╗  ██╗ █████╗ ██████╗       ║
+║ ████╗  ██║██╔══██╗████╗ ████║██╔═══██╗██╔════╝██║ ██╔╝██╔══██╗██╔══██╗      ║
+║ ██╔██╗ ██║███████║██╔████╔██║██║   ██║███████╗█████╔╝ ███████║██████╔╝      ║
+║ ██║╚██╗██║██╔══██║██║╚██╔╝██║██║   ██║╚════██║██╔═██╗ ██╔══██║██╔══██╗      ║
+║ ██║ ╚████║██║  ██║██║ ╚═╝ ██║╚██████╔╝███████║██║  ██╗██║  ██║██║  ██║      ║
+║ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝      ║
+║                                                                              ║
+║                        N A M O S K H A R   B O O T                           ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+EOF
+
+echo -e "$RESET"
+
+# =========================
+# Information Panel
+# =========================
+
+echo -e "${WHITE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+
+echo -e "${RED}User      ${WHITE}: ${USER_NAME}"
+echo -e "${RED}Android   ${WHITE}: ${ANDROID}"
+echo -e "${RED}Battery   ${WHITE}: ${BATTERY}%"
+echo -e "${RED}RAM Free  ${WHITE}: ${RAM}"
+echo -e "${RED}Storage   ${WHITE}: ${STORAGE}"
+echo -e "${RED}IP        ${WHITE}: ${IP}"
+echo -e "${RED}Date      ${WHITE}: ${DATE}"
+echo -e "${RED}Time      ${WHITE}: ${TIME}"
+
+echo -e "${WHITE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
 echo ""
-
-echo -e "${WHITE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-echo -e "${RED} Android ${WHITE}: ${ANDROID}"
-echo -e "${RED} Battery ${WHITE}: ${BATTERY}%"
-echo -e "${RED} Date    ${WHITE}: ${DATE}"
-echo -e "${RED} Time    ${WHITE}: ${TIME}"
-echo -e "${RED} IP      ${WHITE}: ${IP}"
-echo -e "${WHITE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-
+echo -e "${RED}[ SYSTEM READY ]${RESET}"
 echo ""
